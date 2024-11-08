@@ -1,4 +1,4 @@
-const { users } = require('./database');
+const { pool } = require('./db');
 
 let sqlInjectionEnabled = false;
 
@@ -6,20 +6,35 @@ function toggleSQLInjection(enabled) {
    sqlInjectionEnabled = enabled;
 }
 
-function handleLogin(req, res) {
+async function handleLogin(req, res) {
    const { username, password } = req.body;
-   let user;
 
    if (sqlInjectionEnabled) {
-      user = users.find(u => u.username === username && u.password === password);
+      const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+      try {
+         const result = await pool.query(query);
+         if (result.rows.length > 0) {
+            res.send(`<script>alert("Login successful: ${result.rows}");</script>`);
+         } else {
+            res.send(`<script>alert("Login failed");</script>`);
+         }
+      } catch (err) {
+         console.error("Database error:", err);
+         res.send(`<script>alert("Database error occurred");</script>`);
+      }
    } else {
-      user = users.find(u => u.username === username && u.password === password);
-   }
-
-   if (user) {
-      res.send(`<script>alert("Login successful: ${user.username}");</script>`);
-   } else {
-      res.send(`<script>alert("Login failed");</script>`);
+      const query = 'SELECT * FROM users WHERE username = $1 AND password = $2';
+      try {
+         const result = await pool.query(query, [username, password]);
+         if (result.rows.length > 0) {
+            res.send(`<script>alert("Login successful: ${result.rows[0].username}");</script>`);
+         } else {
+            res.send(`<script>alert("Login failed");</script>`);
+         }
+      } catch (err) {
+         console.error("Database error:", err);
+         res.send(`<script>alert("Database error occurred");</script>`);
+      }
    }
 }
 
