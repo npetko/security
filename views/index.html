@@ -21,8 +21,18 @@
    <hr>
 
    <h2>Broken Authentication</h2>
-   <form>
+   <!-- <form>
       <button type="submit">Access Admin Panel</button><br><br>
+      <input type="checkbox" name="brokenAuth" /> Omogući Broken Authentication
+   </form> -->
+   <form method="POST" action="/login">
+      <label>Korisničko ime:</label><br>
+      <input type="text" name="username" /><br><br>
+
+      <label>Lozinka:</label><br>
+      <input type="text" name="password" /><br><br>
+
+      <button type="submit">Login</button><br><br>
       <input type="checkbox" name="brokenAuth" /> Omogući Broken Authentication
    </form>
 </body>
