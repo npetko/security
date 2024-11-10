@@ -6,34 +6,36 @@
    <title>Vulnerabilities</title>
 </head>
 <body>
+   <form method="post" action="/toggle">
+      <input type="checkbox" name="sqlInjection" /> Omogući SQL Injection <br><br>
+      <input type="checkbox" name="brokenAuth" /> Omogući Broken Authentication <br><br>
+      <button type="submit">Postavi sigurnosne postavke</button>
+   </form>
+
+   <hr>
+
    <h2>SQL Injection</h2>
-   <form method="POST" action="/login">
+   <form method="post" action="/login">
       <label>Korisničko ime:</label><br>
       <input type="text" name="username" /><br><br>
 
       <label>Lozinka:</label><br>
-      <input type="text" name="password" /><br><br>
+      <input type="password" name="password" /><br><br>
 
-      <button type="submit">Login</button><br><br>
-      <input type="checkbox" name="sqlInjection" /> Omogući SQL Injection
+      <button type="submit">Login</button>
    </form>
 
    <hr>
 
    <h2>Broken Authentication</h2>
-   <!-- <form>
-      <button type="submit">Access Admin Panel</button><br><br>
-      <input type="checkbox" name="brokenAuth" /> Omogući Broken Authentication
-   </form> -->
-   <form method="POST" action="/login">
+   <form method="post" action="/auth">
       <label>Korisničko ime:</label><br>
       <input type="text" name="username" /><br><br>
 
       <label>Lozinka:</label><br>
       <input type="text" name="password" /><br><br>
 
-      <button type="submit">Login</button><br><br>
-      <input type="checkbox" name="brokenAuth" /> Omogući Broken Authentication
+      <button type="submit">Login</button>
    </form>
 </body>
 </html>
