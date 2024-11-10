@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const { toggleSQLInjection, handleLogin } = require('./sqlInjection');
 const { toggleBrokenAuth, handleBrokenAuth } = require('./brokenAuth.js');
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,6 +30,6 @@ app.post('/auth', (req, res) => {
    handleBrokenAuth(req, res);
 });
 
-app.listen(3000, () => {
-   console.log('Server running on http://localhost:3000');
+app.listen(PORT, () => {
+   console.log(`Server running on port ${PORT}`);
 });
