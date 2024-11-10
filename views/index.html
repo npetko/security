@@ -4,38 +4,54 @@
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Vulnerabilities</title>
+   <link rel="stylesheet" href="./index.css">
 </head>
 <body>
-   <form method="post" action="/toggle">
-      <input type="checkbox" name="sqlInjection" /> Omogući SQL Injection <br><br>
-      <input type="checkbox" name="brokenAuth" /> Omogući Broken Authentication <br><br>
-      <button type="submit">Postavi sigurnosne postavke</button>
-   </form>
+   <div class="container">
+      <p>Potrebno označiti ili odznačiti opcije koje se žele testirati i zatim odabrati "Postavi sigurnosne postavke."</p>
+      <form method="post" action="/toggle">
+         <input type="checkbox" name="sqlInjection" /> Omogući SQL Injection <br><br>
+         <input type="checkbox" name="brokenAuth" /> Omogući Broken Authentication <br><br>
+         <button type="submit">Postavi sigurnosne postavke</button>
+      </form>
 
-   <hr>
+      <hr>
 
-   <h2>SQL Injection</h2>
-   <form method="post" action="/login">
-      <label>Korisničko ime:</label><br>
-      <input type="text" name="username" /><br><br>
+      <h2>SQL Injection</h2>
+      <p>
+         Ako je uključena opcija za omogućavanje SQL Injectiona moguće je u polje za korisničko ime i lozinku upisati: ' OR '1'='1 
+         te se time dobije ispis svih korisničkih imena iz baze. Naravno samim time moguće je unositi i drugi kod kojim bi se moglo 
+         manipulirati bazom podataka. Ako nije omogućena opcija aplikacija bi se trebala ponašati da se izbjegne manipuliranaje bazom podataka.
+      </p>
+      <form method="post" action="/login">
+         <label>Korisničko ime:</label><br>
+         <input type="text" name="username" /><br><br>
 
-      <label>Lozinka:</label><br>
-      <input type="password" name="password" /><br><br>
+         <label>Lozinka:</label><br>
+         <input type="password" name="password" /><br><br>
 
-      <button type="submit">Login</button>
-   </form>
+         <button type="submit">Login</button>
+      </form>
 
-   <hr>
+      <hr>
 
-   <h2>Broken Authentication</h2>
-   <form method="post" action="/auth">
-      <label>Korisničko ime:</label><br>
-      <input type="text" name="username" /><br><br>
+      <h2>Broken Authentication</h2>
+      <p>
+         Ako je uključena opcija za omogućavanje Broken Authenticationa aplikacija omogućava vertikalne i horizontalne napade, to jest
+         aplikacija nikako ne ograničava broj pokušaja za prijavu. Ako opcija nije uključena aplikacija ograničava pokušaje na način da 
+         postavlja pet sekundi odgode između svakog pokušaja te nakon tri pokušaja ne dozvoljava ponovne pokušaje.
+         U svrhu testiranja i prikaza ako je potrebno resetirati broj pokušaja može se to napraviti ponovnim postavljanjem sigurnosne 
+         postavke, u slučaju kada bi se radilo o pravoj aplikaciji bila bi potrebna izmjena lozinke putem e-mail adrese.
+      </p>
+      <form method="post" action="/auth">
+         <label>Korisničko ime:</label><br>
+         <input type="text" name="username" /><br><br>
 
-      <label>Lozinka:</label><br>
-      <input type="password" name="password" /><br><br>
+         <label>Lozinka:</label><br>
+         <input type="password" name="password" /><br><br>
 
-      <button type="submit">Login</button>
-   </form>
+         <button type="submit">Login</button>
+      </form>
+   </div>
 </body>
 </html>
